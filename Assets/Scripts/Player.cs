@@ -6,7 +6,12 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     Vector2 rawInput;
+    [SerializeField] float moveSpeed = 10f;
 
+    [SerializeField] GameObject laserPrefab;
+
+
+    // SET THE PLAYER MOVEMENT BOUNDARY VARIABLES
     Vector2 minBounds;
     Vector2 maxBounds;
     [SerializeField] float paddingLeft;
@@ -14,8 +19,7 @@ public class Player : MonoBehaviour
     [SerializeField] float paddingTop;
     [SerializeField] float paddingBottom;
 
-    [SerializeField] float moveSpeed = 10f;
-
+    
     void Start() 
     {
         InitBounds();
@@ -24,7 +28,6 @@ public class Player : MonoBehaviour
     void Update()
     {
         Move();
-        
     }
 
     void InitBounds()
