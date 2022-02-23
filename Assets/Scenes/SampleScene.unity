@@ -385,8 +385,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1990843810, guid: 6ba33eba59008e244926d0fa63204b20, type: 3}
-      propertyPath: laser
-      value: 
+      propertyPath: projectileFiringPeriod
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1462966510165885930, guid: 6ba33eba59008e244926d0fa63204b20, type: 3}
       propertyPath: m_RootOrder

@@ -6,9 +6,14 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     Vector2 rawInput;
+    float fireInput;
     [SerializeField] float moveSpeed = 10f;
 
     [SerializeField] GameObject laserPrefab;
+    [SerializeField] float laserSpeed = 50f;
+    [SerializeField] float projectileFiringPeriod = 0.5f;
+
+    Coroutine firingCoroutine;
 
 
     // SET THE PLAYER MOVEMENT BOUNDARY VARIABLES
@@ -30,13 +35,6 @@ public class Player : MonoBehaviour
         Move();
     }
 
-    void InitBounds()
-    {
-        Camera mainCamera = Camera.main;
-        minBounds = mainCamera.ViewportToWorldPoint(new Vector2(0,0));
-        maxBounds = mainCamera.ViewportToWorldPoint(new Vector2(1,1));
-    }
-
     void Move()
     {
         Vector2 delta = rawInput * moveSpeed * Time.deltaTime;
@@ -49,7 +47,35 @@ public class Player : MonoBehaviour
     void OnMove(InputValue value)
     {
         rawInput = value.Get<Vector2>();
-        Debug.Log(rawInput);
+        //Debug.Log(rawInput);
+    }
+
+    void OnFire(InputValue value)
+    {
+        if ( value.isPressed ) 
+        {
+            firingCoroutine =  StartCoroutine(FireContinuously());
+        }
+        if ( !value.isPressed )
+        {
+            StopCoroutine(firingCoroutine);
+        }
+    }
+     IEnumerator FireContinuously()
+    {
+        while (true)
+        {
+            GameObject laser = Instantiate(laserPrefab, transform.position, Quaternion.identity) as GameObject;
+            laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laserSpeed);
+            yield return new WaitForSeconds(projectileFiringPeriod);
+        }
+    }
+
+    void InitBounds()
+    {
+        Camera mainCamera = Camera.main;
+        minBounds = mainCamera.ViewportToWorldPoint(new Vector2(0,0));
+        maxBounds = mainCamera.ViewportToWorldPoint(new Vector2(1,1));
     }
 
 }
