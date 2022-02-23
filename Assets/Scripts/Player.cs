@@ -71,6 +71,8 @@ public class Player : MonoBehaviour
         }
     }
 
+    
+
     void InitBounds()
     {
         Camera mainCamera = Camera.main;
